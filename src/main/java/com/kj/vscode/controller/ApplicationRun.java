@@ -16,8 +16,9 @@ public class ApplicationRun {
 		private static Logger log = LoggerFactory.getLogger(ApplicationRun.class);
 	  
 		public static void main(String[] args) {
+			System.out.println("============================启动成功  开始========================");
 			SpringApplication.run(ApplicationRun.class, args);
-			System.out.println("============================启动成功========================");
+			System.out.println("============================启动成功    成功========================");
 		}
 
 }
