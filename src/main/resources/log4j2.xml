@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="warn" monitorInterval="600" >
+
+    <Properties>
+        <!-- 配置日志文件输出目录,以下两个属性系统可自动跟据项目相关属性进行识别 -->
+        <Property name="LOG_HOME">${sys:logDirPath}</Property><!-- 默认在 classpath下的logs目录中-->
+        <Property name="FILE_NAME">${sys:systemCode}</Property><!-- 默认跟应用程序名保持一致-->
+    </Properties>
+
+	<Appenders>
+		
+		<!--文件日志，注意必须是 RollingRandomAccessFile 标签才能跟据日期切割 -->
+		<RollingRandomAccessFile name="file" fileName="${LOG_HOME}${FILE_NAME}.log" 
+		filePattern="${LOG_HOME}%d{yyyy-MM-dd}/${FILE_NAME}/${FILE_NAME}.log.%d{yyyy-MM-dd-HH}" 
+		immediateFlush="false" append="true">
+			<PatternLayout pattern="%d{DEFAULT} [%t] %-5level %class:%L %M %X{appName} %X{spanId} %X{parentId} %X{traceId} - %msg%xEx%n" charset="UTF-8" />
+		    <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+        </Policies>
+		</RollingRandomAccessFile>
+		
+		<!--控制台日志-->
+		<Console name="console" target="SYSTEM_OUT"   >
+			<PatternLayout pattern="%d{DEFAULT} [%t] %-5level %class:%L %M %X{appName} %X{spanId} %X{parentId} %X{traceId} - %msg%xEx%n" charset="UTF-8" />
+		</Console>
+		
+	</Appenders>
+	
+	<Loggers>
+		
+		<!--根日志，开发环境打印到控制台-->
+		<Root level="debug" includeLocation="true" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
+		</Root>
+		
+		<!--gnete框架日志，只能是 debug 或者 info，不能是 warn、error等 -->
+		<AsyncLogger name="com.kj" level="debug"/>
+		
+		<!--github 日志，目前服务调用链日志配置在这里，务必保证这个节点输出级别为 info 或以下, 
+		后面会将调用链监控日志统放到 com.gnete中 -->
+		<AsyncLogger name="com.github" level="info"/>
+
+		<!-- 配置中心日志 -->
+		<AsyncLogger name="com.ctrip" level="warn"/>
+		
+		<!--spring日志-->
+		<AsyncLogger name="org.springframework" level="warn"/>
+		
+		<!--mybatis日志-->
+		<AsyncLogger name="org.mybatis" level="warn"/>
+		
+		<!--apache日志-->
+		<AsyncLogger name="org.apache" level="warn"/>
+		
+		<!--alibaba日志-->
+		<AsyncLogger name="com.alibaba" level="warn"/>
+		
+		<!--其它模块日志写这里-->
+		
+	</Loggers>
+</Configuration>
+
+

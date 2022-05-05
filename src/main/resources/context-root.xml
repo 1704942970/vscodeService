@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:apollo="http://www.ctrip.com/schema/apollo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+  http://www.ctrip.com/schema/apollo http://www.ctrip.com/schema/apollo.xsd"
+	default-lazy-init="true">
+
+	<description></description>
+	<!-- 上下文参数 -->
+	<bean id="context-attrs" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<!-- 系统ID -->
+				<entry key="systemId" value="vscode" />
+				<!-- 系统名称 -->
+				<entry key="systemName" value="学习vue开发云闪付小程序" />
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>
+
+
